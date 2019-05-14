@@ -1,3 +1,6 @@
+import Dao.DaoImplementation.BookingDaoImpl;
+import Dao.DaoImplementation.EmployeeDaoImpl;
+import Dao.DaoImplementation.RoomDaoImpl;
 import bookings.Booking;
 import employees.Employee;
 import employees.Paznic;
@@ -19,10 +22,14 @@ public class Main {
         Date checkRev = new Date(2019,6,24);
         Date checkCost = new Date(2019,6,19);
 
+        EmployeeDaoImpl impE = new EmployeeDaoImpl();
+        BookingDaoImpl impB = new BookingDaoImpl();
+        RoomDaoImpl impR = new RoomDaoImpl();
+
         try {
-            List<HotelRoom> mHotelRooms = CSVService.readRoomsFromCSV("C:\\Users\\George\\Desktop\\mavenproiectpao\\Rooms.csv");
-            SortedSet<Booking> bookingSet = CSVService.readBookingsFromCsv("C:\\Users\\George\\Desktop\\mavenproiectpao\\Bookings.csv");
-            List<Employee> mEmployees = CSVService.readEmployeesFromCsv("C:\\Users\\George\\Desktop\\mavenproiectpao\\Employees.csv");
+            List<HotelRoom> mHotelRooms = impR.selectAll();
+            SortedSet<Booking> bookingSet = impB.selectAll();
+            List<Employee> mEmployees = impE.selectAll();
 
             Hotel hotel = Hotel.getInstance(mHotelRooms,bookingSet,mEmployees);
             Employee newEmployee = new Paznic("Marcel");
@@ -42,6 +49,15 @@ public class Main {
           // CSVService.writeBookingsToCsv("C:\\Users\\George\\Desktop\\mavenproiectpao\\Bookings.csv",hotel.getBookingSet());
           // CSVService.writeEmployeesFromCsv("C:\\Users\\George\\Desktop\\mavenproiectpao\\Employees.csv",hotel.getmEmployees());
 
+           /* EmployeeDaoImpl impE = new EmployeeDaoImpl();
+            impl.insertAll(hotel.getmEmployees());
+            BookingDaoImpl impB = new BookingDaoImpl();
+            imp.createBookingTable();
+            imp.insertAll(hotel.getBookingSet());
+            RoomDaoImpl impR = new RoomDaoImpl();
+            impR.createRoomTable();
+            impR.insertAll(hotel.getmHotelRooms());
+            */
         }
 
         catch (Exception e){
