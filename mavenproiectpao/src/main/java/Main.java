@@ -9,7 +9,9 @@ import rooms.HotelRoom;
 import services.CSVService;
 import services.HotelServices;
 
+import javax.swing.*;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.SortedSet;
@@ -21,7 +23,8 @@ public class Main {
         Date checkOut = new Date(2019,6,27);
         Date checkRev = new Date(2019,6,24);
         Date checkCost = new Date(2019,6,19);
-
+        Date today = Calendar.getInstance().getTime();
+        Date tomporrow = new Date (2019, 5, 19);
         EmployeeDaoImpl impE = new EmployeeDaoImpl();
         BookingDaoImpl impB = new BookingDaoImpl();
         RoomDaoImpl impR = new RoomDaoImpl();
@@ -33,7 +36,7 @@ public class Main {
 
             Hotel hotel = Hotel.getInstance(mHotelRooms,bookingSet,mEmployees);
             Employee newEmployee = new Paznic("Marcel");
-
+            hotel.addBooking(110,today,tomporrow);
             HotelServices.listSalariesAndTotalCostPerMonth(hotel);
             HotelServices.checkOutAndCashIn(14, checkIn, checkOut, hotel);
             HotelServices.hireEmployee(newEmployee, hotel);
@@ -58,6 +61,13 @@ public class Main {
             impR.createRoomTable();
             impR.insertAll(hotel.getmHotelRooms());
             */
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    //Turn off metal's use of bold fonts
+                    UIManager.put("swing.boldMetal", Boolean.FALSE);
+                    SwingGUI.createAndShowGUI(hotel);
+                }
+            });
         }
 
         catch (Exception e){

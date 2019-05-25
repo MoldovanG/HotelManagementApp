@@ -96,11 +96,8 @@ public final class Hotel  {
         return null;
     }
 
-
-
-    public void addBooking (int roomNumber, Date checkInDate, Date checkOutDate) throws Exception{
+    public synchronized void  addBooking (int roomNumber, Date checkInDate, Date checkOutDate) throws Exception{
         Booking toAdd = new Booking(roomNumber, checkInDate, checkOutDate);
-
         if (bookingSet.contains(toAdd))
             throw new Exception("Rezervare esuata, date calendaristice invalide sau deja ocupate");
         else bookingSet.add(toAdd);
